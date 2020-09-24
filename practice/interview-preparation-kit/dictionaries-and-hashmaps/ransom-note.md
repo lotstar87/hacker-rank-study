@@ -36,3 +36,42 @@ function checkMagazine(magazine, note) {
 
 ### Test Result 
 모든 테스트 통과
+
+### 분석
+Dictionary and Hash Table 단원인데 배열만을 가지고 풀었으므로, 해당 방법을 이용해 다시 풀어보기로 함.
+
+## Try 2.
+Magazine의 단어들을 {단어: 개수}가 되도록 Map에 저장하고, Note의 단어를 하나씩 꺼내 Map에 존재하는지 확인한다.
+Map에 존재하면 개수를 하나씩 감소시키고 0개가 되면 Map에서 단어를 삭제.
+
+위를 반복하다가, Note의 단어가 Map에 존재하지 않으면 재구성할 수 없다는 의미이므로 No를 출력하고, 아니라면 Yes를 출력한다.
+
+### Code
+```js
+function checkMagazine(magazine, note) {
+  let usedOnlyMagazine = true
+
+  const frequencyOfMagWord = {}
+
+  magazine.forEach(word => {
+    if(!frequencyOfMagWord[word]) frequencyOfMagWord[word] = 0
+    frequencyOfMagWord[word] ++
+  })
+
+  note.forEach(word => {
+    if(frequencyOfMagWord[word]) {
+      frequencyOfMagWord[word] --
+      if(frequencyOfMagWord[word] === 0) delete frequencyOfMagWord[word]
+    }
+    else {
+      usedOnlyMagazine = false
+      return
+    }
+  })
+
+  console.log(usedOnlyMagazine ? 'Yes': 'No')
+}
+```
+
+### Test Result
+모든 테스트 통과
